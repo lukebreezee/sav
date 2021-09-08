@@ -1,0 +1,9 @@
+Implementation Details:
+
+- Standard sorting algorithm visualizer
+- 5 algo types: Merge, Heap, Quick, Bubble, Selection
+- Adjustable array size: from 5 to 100
+- Adjustable speed: 0.25x to 5x
+- Array element being worked on is the one that is highlighted a
+different color
+- Each bar on the 'bar graph' is its own component
