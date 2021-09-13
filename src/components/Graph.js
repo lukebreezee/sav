@@ -12,7 +12,7 @@ class GraphClass extends React.Component {
     }
 
     renderBars() {
-        return this.props.state.map((num, index) => {
+        return this.props.nums.map((num, index) => {
             return <Bar height={num} key={index} />
         });
     }

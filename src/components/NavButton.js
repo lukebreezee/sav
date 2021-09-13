@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { store } from '..';
 import { actionCreator } from '../action-creators';
+import { mapState } from '../map-to-props';
+import { mergeSort } from '../helpers';
 export { NavButton };
 
 class NavButtonClass extends React.Component {
@@ -21,7 +23,16 @@ class NavButtonClass extends React.Component {
     handleClick() {
         this.setState({color: '#FFFB7A'});
 
-        store.dispatch(actionCreator(this.props.label));
+        //store.dispatch(actionCreator(this.props.label));
+        switch(this.props.label) {
+            case 'MERGE SORT':
+                //mergeSort(this.props.nums, 0, this.props.nums.length - 1);
+                store.dispatch(actionCreator(this.props.label));
+                break;
+            case 'RANDOMIZE':
+                store.dispatch(actionCreator('RANDOMIZE'));
+                break;
+        }
     }
 
     handleMouseDown() {
@@ -49,4 +60,4 @@ class NavButtonClass extends React.Component {
     }
 }
 
-const NavButton = connect()(NavButtonClass);
+const NavButton = connect(mapState)(NavButtonClass);

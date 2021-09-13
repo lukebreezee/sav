@@ -3,7 +3,7 @@ export { mapState, mapDispatch }
 
 const mapState = state => {
     return {
-        state: state
+        nums: state.nums
     };
 };
 
