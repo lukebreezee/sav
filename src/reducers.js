@@ -19,6 +19,13 @@ const reducer = (state = initialState, action) => {
       case 'ARRAY UPDATE':
         tmp.nums = [...action.replacement];
         break;
+      case 'TIME INDEX SHIFT':
+        if (action.operation === '+') {
+          tmp.timeoutIndex = tmp.timeoutIndex + 1;
+        } else {
+          tmp.timeoutIndex = tmp.timeoutIndex - 1;
+        }
+        break;
       default:
         return state;
     }

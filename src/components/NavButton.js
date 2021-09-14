@@ -26,8 +26,8 @@ class NavButtonClass extends React.Component {
         //store.dispatch(actionCreator(this.props.label));
         switch(this.props.label) {
             case 'MERGE SORT':
-                //mergeSort(this.props.nums, 0, this.props.nums.length - 1);
-                store.dispatch(actionCreator(this.props.label));
+                mergeSort(this.props.nums, 0, this.props.nums.length - 1);
+                //store.dispatch(actionCreator(this.props.label));
                 break;
             case 'RANDOMIZE':
                 store.dispatch(actionCreator('RANDOMIZE'));

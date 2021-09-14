@@ -13,7 +13,7 @@ const initialState = {
     this.nums = [...arr];
   },
   nums: [],
-  coloredBarIndex: null
+  timeoutIndex: 0
 };
 
 const store = createStore(reducer);
