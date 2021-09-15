@@ -27,18 +27,22 @@ const mergeSort = (arr, l, r) => {
 
         mergedArray.push(num);
 
-        /*tmp = [
+        let tmpArray = [
             ...tmp.slice(0, l),
             ...mergedArray,
             ...left,
             ...right,
             ...tmp.slice(r + 1)
-        ]
+        ];
 
-        store.dispatch({
-            type: 'ARRAY UPDATE',
-            replacement: [...tmp]
-        });*/
+        store.dispatch({type: 'TIME INDEX SHIFT', operation: '+'});
+        setTimeout(() => {
+            store.dispatch({
+                type: 'ARRAY UPDATE',
+                replacement: [...tmpArray]
+            });
+            store.dispatch({type: 'TIME INDEX SHIFT', operation: '-'});
+        }, store.getState().timeoutIndex * 15);
     }
 
     tmp = [
@@ -49,14 +53,14 @@ const mergeSort = (arr, l, r) => {
         ...tmp.slice(r + 1)
     ];
 
-    store.dispatch({type: 'TIME INDEX SHIFT', operation: '+'});
+    /*store.dispatch({type: 'TIME INDEX SHIFT', operation: '+'});
     setTimeout(() => {
         store.dispatch({
             type: 'ARRAY UPDATE',
             replacement: [...tmp]
         });
         store.dispatch({type: 'TIME INDEX SHIFT', operation: '-'});
-    }, store.getState().timeoutIndex * 60);
+    }, store.getState().timeoutIndex * 60);*/
 
     return tmp;
 };
