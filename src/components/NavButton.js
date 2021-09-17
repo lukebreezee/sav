@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import { store } from '..';
 import { actionCreator } from '../action-creators';
 import { mapState } from '../map-to-props';
-import { mergeSort } from '../helpers';
+import { mergeSort, quickSort } from '../helpers';
 export { NavButton };
 
+//Component for the buttons inside Navbar.js
 class NavButtonClass extends React.Component {
     constructor(props) {
         super(props);
@@ -20,14 +21,24 @@ class NavButtonClass extends React.Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
+    //When a button is clicked...
     handleClick() {
+        //Color goes back to when mouse was hovered
         this.setState({color: '#FFFB7A'});
 
-        //store.dispatch(actionCreator(this.props.label));
+        /* We call our sorting functions from this component and not
+         * the reducer. This is because you cannot dispatch to the
+         * store from a reducer, and we need to continuously dispatch
+         * within our function to have the animation working properly
+         */
+
+        //Switch statement for the button that was clicked
         switch(this.props.label) {
             case 'MERGE SORT':
                 mergeSort(this.props.nums, 0, this.props.nums.length - 1);
-                //store.dispatch(actionCreator(this.props.label));
+                break;
+            case 'QUICK SORT':
+                quickSort(this.props.nums, 0, this.props.nums.length - 1);
                 break;
             case 'RANDOMIZE':
                 store.dispatch(actionCreator('RANDOMIZE'));
@@ -35,16 +46,22 @@ class NavButtonClass extends React.Component {
         }
     }
 
+    //Button turns dark blue when mouse is down
     handleMouseDown() {
         this.setState({color: '#474DFF'});
     }
+
+    //Button turns back to white when mouse moves out
     handleMouseOut() {
         this.setState({color: '#FFFFFF'});
     }
+
+    //Button turns yellow when mouse hovers
     handleMouseOver() {
         this.setState({color: '#FFFB7A'});
     }
 
+    //Render the component with all of its properties
     render() {
         return (
             <div 
@@ -60,4 +77,5 @@ class NavButtonClass extends React.Component {
     }
 }
 
+//Connect our component to the redux store
 const NavButton = connect(mapState)(NavButtonClass);

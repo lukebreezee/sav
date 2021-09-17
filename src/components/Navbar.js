@@ -3,12 +3,14 @@ import ReactSlider from 'react-slider';
 import { NavButton } from './NavButton';
 export { Navbar };
 
+//This navbar holds all the buttons at the top
 class Navbar extends React.Component {
     constructor(props) {
         super(props);
     }
     
     render() {
+        //Render all the buttons inside our navbar
         return (
             <div id="navbar">
                 <ReactSlider />

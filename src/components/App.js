@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { Navbar } from './Navbar.js';
 export { App };
 
+//Parent Component
 class App extends React.Component {
     constructor(props) {
       super(props);
