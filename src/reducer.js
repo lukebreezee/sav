@@ -11,26 +11,29 @@ const reducer = (state = initialState, action) => {
     switch(action.type) {
       //Generates new, random array
       case 'RANDOMIZE':
-        tmp.nums = [];
+        tmp.barProperties = [];
         for (let i = 0; i < 300; i++) {
           let num = Math.floor(Math.random() * 100);
-          tmp.nums.push(num);
+          tmp.barProperties.push({value: num, color: '#474CFF'});
         }
         break;
 
       //Assigns our 'nums' array in the store to its replacement using spread operator
       case 'ARRAY UPDATE':
-        tmp.nums = [...action.replacement];
+        //tmp.nums = [...action.replacement];
+        for (let i = 0; i < action.replacement.length; i++) {
+          tmp.barProperties[i].value = action.replacement[i];
+        }
         break;
 
       //Swaps elements in our 'nums' array
-      case 'SWAP':
-        const tmpArray = [...tmp.nums];
-        const swapPlaceholder = tmpArray[action.i];
-        tmpArray[action.i] = tmpArray[action.j];
-        tmpArray[action.j] = swapPlaceholder;
-        tmp.nums = [...tmpArray];
-        break;
+      // case 'SWAP':
+      //   const tmpArray = [...tmp.nums];
+      //   const swapPlaceholder = tmpArray[action.i];
+      //   tmpArray[action.i] = tmpArray[action.j];
+      //   tmpArray[action.j] = swapPlaceholder;
+      //   tmp.nums = [...tmpArray];
+      //   break;
 
       /* Updates the 'timeIndex' variable, this is necessary for the
        * animation and is explained farther in 'helpers.js'
@@ -43,16 +46,11 @@ const reducer = (state = initialState, action) => {
         }
         break;
 
-      case 'ASSIGN COLORS':
-        for (let i = 0; i < tmp.nums.length; i++) {
-          tmp.barColors.push('#474CFF');
-        }
-        break;
-
       case 'CHANGE BAR COLOR':
-        const tmpArr = Object.assign({}, tmp);
-        tmpArr.barColors.splice(action.index, 1, action.color);  //[action.index] = action.color;
-        tmp = tmpArr;
+        // const tmpArr = Object.assign({}, tmp);
+        // tmpArr.barColors.splice(action.index, 1, action.color);  //[action.index] = action.color;
+        // tmp = tmpArr;
+        tmp.barColors[action.index].color = action.color;
         break;
 
       case 'CHANGE RED BAR':

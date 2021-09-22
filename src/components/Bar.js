@@ -6,9 +6,6 @@ class Bar extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            barColor: this.props.barColor
-        };
     }
 
     render() {
@@ -18,7 +15,7 @@ class Bar extends React.Component {
             style={
                 {
                     height: (this.props.height).toString() + '%',
-                    backgroundColor: this.state.barColor
+                    backgroundColor: this.props.barColor
                 }
             }>
             </div>

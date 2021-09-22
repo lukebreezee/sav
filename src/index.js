@@ -24,7 +24,8 @@ const initialState = {
   nums: [], //Array to be dynamically rendered in 'components/Graph.js'
   timeoutIndex: 0, //For the setTimeout function in 'helpers.js'
   barColors: [],
-  redBarIndex: null
+  redBarIndex: null,
+  barProperties: []
 };
 
 //Initialize the redux store
