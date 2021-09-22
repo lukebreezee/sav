@@ -4,7 +4,8 @@ export { mapState, mapDispatch }
 //Gives components the 'nums' array in the redux store
 const mapState = state => {
     return {
-        nums: state.nums
+        nums: state.nums,
+        barColors: state.barColors
     };
 };
 

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { store } from '..';
 import { actionCreator } from '../action-creators';
 import { mapState } from '../map-to-props';
-import { mergeSort, quickSort } from '../helpers';
+import { mergeSort, quickSort, selectionSort } from '../helpers';
 export { NavButton };
 
 //Component for the buttons inside Navbar.js
@@ -39,6 +39,10 @@ class NavButtonClass extends React.Component {
                 break;
             case 'QUICK SORT':
                 quickSort(this.props.nums, 0, this.props.nums.length - 1);
+                break;
+            case 'SELECTION SORT':
+                store.dispatch({type: 'CHANGE BAR COLOR', index: 4, color: '#FF0000'});
+                // selectionSort(this.props.nums, 0);
                 break;
             case 'RANDOMIZE':
                 store.dispatch(actionCreator('RANDOMIZE'));

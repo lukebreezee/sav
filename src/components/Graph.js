@@ -15,7 +15,12 @@ class GraphClass extends React.Component {
     //Renders bars based on the 'nums' array in the redux store
     renderBars() {
         return this.props.nums.map((num, index) => {
-            return <Bar height={num} key={index} />
+            return <Bar 
+                    height={num} 
+                    key={index} 
+                    indexValue={index} 
+                    barColor={this.props.barColors[index]}
+                    />
         });
     }
 

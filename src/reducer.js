@@ -1,4 +1,5 @@
 import { initialState } from './index.js'
+import { replace } from './helpers.js'
 export { reducer };
 
 //Declare our reducer with the initialState object from index.js
@@ -11,7 +12,7 @@ const reducer = (state = initialState, action) => {
       //Generates new, random array
       case 'RANDOMIZE':
         tmp.nums = [];
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 300; i++) {
           let num = Math.floor(Math.random() * 100);
           tmp.nums.push(num);
         }
@@ -22,9 +23,13 @@ const reducer = (state = initialState, action) => {
         tmp.nums = [...action.replacement];
         break;
 
-      //Replaces individual indeces of our 'nums' array
-      case 'REPLACE':
-        tmp.nums.splice(action.index, 1, action.replacement);
+      //Swaps elements in our 'nums' array
+      case 'SWAP':
+        const tmpArray = [...tmp.nums];
+        const swapPlaceholder = tmpArray[action.i];
+        tmpArray[action.i] = tmpArray[action.j];
+        tmpArray[action.j] = swapPlaceholder;
+        tmp.nums = [...tmpArray];
         break;
 
       /* Updates the 'timeIndex' variable, this is necessary for the
@@ -36,6 +41,22 @@ const reducer = (state = initialState, action) => {
         } else {
           tmp.timeoutIndex = tmp.timeoutIndex - 1;
         }
+        break;
+
+      case 'ASSIGN COLORS':
+        for (let i = 0; i < tmp.nums.length; i++) {
+          tmp.barColors.push('#474CFF');
+        }
+        break;
+
+      case 'CHANGE BAR COLOR':
+        const tmpArr = Object.assign({}, tmp);
+        tmpArr.barColors.splice(action.index, 1, action.color);  //[action.index] = action.color;
+        tmp = tmpArr;
+        break;
+
+      case 'CHANGE RED BAR':
+        tmp.redBarIndex = action.index;
         break;
 
       //Default case for initialization of store

@@ -5,13 +5,22 @@ export { Bar };
 class Bar extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            barColor: this.props.barColor
+        };
     }
 
     render() {
         return (
             <div id="bar"
             /* Bar gets height relative to the prop passed through in Graph.js */
-            style={{height: (this.props.height).toString() + '%'}}>
+            style={
+                {
+                    height: (this.props.height).toString() + '%',
+                    backgroundColor: this.state.barColor
+                }
+            }>
             </div>
         );
     }

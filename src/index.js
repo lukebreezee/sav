@@ -22,7 +22,9 @@ export { store };
 //Initial state for the redux store
 const initialState = {
   nums: [], //Array to be dynamically rendered in 'components/Graph.js'
-  timeoutIndex: 0 //For the setTimeout function in 'helpers.js'
+  timeoutIndex: 0, //For the setTimeout function in 'helpers.js'
+  barColors: [],
+  redBarIndex: null
 };
 
 //Initialize the redux store
@@ -30,6 +32,8 @@ const store = createStore(reducer);
 
 //Randomize the array before we render the application
 store.dispatch(actionCreator('RANDOMIZE'));
+
+store.dispatch(actionCreator('ASSIGN COLORS'));
 
 //Render the application
 ReactDOM.render(

@@ -1,7 +1,7 @@
 //This file contains our sorting functions and helpers for those functions
 
 import { store } from '.';
-export { mergeSort, quickSort };
+export { mergeSort, quickSort, selectionSort };
 
 /* Merge sort with bounds of a single array (no copies created).
  * arr is the source array, l is the leftmost index of our subarray,
@@ -93,7 +93,7 @@ const mergeSort = (arr, l, r) => {
             });
             //After we're done, we decrement the value of the time index
             store.dispatch({type: 'TIME INDEX SHIFT', operation: '-'});
-        }, store.getState().timeoutIndex * 15);
+        }, store.getState().timeoutIndex * 7);
         // ^^Function takes timeoutIndex * 15 milliseconds to start its execution
     }
 
@@ -117,32 +117,96 @@ const mergeSort = (arr, l, r) => {
 };
 
 const swap = (arr, i, j) => {
-    const tmp = arr[j];
-    store.dispatch({type: 'REPLACE', index: j, replacement: arr[i]});
-    store.dispatch({type: 'REPLACE', index: i, replacement: tmp});
+    const tmpArr = [...arr];
+    const tmpNum = tmpArr[i];
+
+    tmpArr[i] = tmpArr[j];
+
+    store.dispatch({type: 'TIME INDEX SHIFT', operation: '+'});
+    setTimeout(() => {
+        store.dispatch({type: 'ARRAY UPDATE', replacement: tmpArr});
+        store.dispatch({type: 'TIME INDEX SHIFT', operation: '-'});
+    }, store.getState().timeoutIndex * 10);
+
+    tmpArr[j] = tmpNum;
+
+    return tmpArr;
 };
 
-const partition = (arr, low, high) => {
-    const pivot = arr[high];
+const partition = (arr, l, r) => {
+    let tmp = [...arr];
 
-    let i = low - 1;
+    const pivot = tmp[r];
 
-    for (let j = low; j < high; j++) {
-        if (arr[j] < pivot) {
+    let i = l - 1;
+
+    for (let j = l; j <= r - 1; j++) {
+        if (tmp[j] < pivot) {
+
             i++;
-            swap(arr, i, j);
+            
+            tmp = swap(tmp, i, j);
         }
     }
-    swap(arr, high, i + 1);
 
-    return i + 1;
+    tmp = swap(tmp, i + 1, r);
+
+    return {pi: i + 1, replacement: tmp};
 };
 
-const quickSort = (arr, low, high) => {
-    if (low < high) {
-        const pi = partition(arr, low, high);
+const quickSort = (arr, l, r) => {
+    let tmp = [...arr];
 
-        quickSort(arr, low, pi - 1);
-        quickSort(arr, pi + 1, high);
+    if (l < r) {
+        const partitionObj = partition(tmp, l, r);
+        const pi = partitionObj.pi;
+        tmp = partitionObj.replacement;
+        
+        tmp = quickSort(tmp, l, pi - 1);
+        tmp = quickSort(tmp, pi + 1, r);
+
     }
+
+    return tmp;
+};
+
+const selectionSort = (arr, firstIndex) => {
+    let tmp = [...arr];
+    let tmpArr;
+
+    let smallestNumIndex = firstIndex;
+
+    store.dispatch({type: 'CHANGE BAR COLOR', index: 4, color: 'red'});
+
+    // for (let i = firstIndex + 1; i < tmp.length; i++) {
+
+    //     store.dispatch({type: 'TIME INDEX SHIFT', operation: '+'});
+    //     setTimeout(() => {
+    //         store.dispatch({type: 'CHANGE BAR COLOR', index: i, color: '#E4384F'});
+    //         store.dispatch({type: 'CHANGE BAR COLOR', index: store.getState().redBarIndex, color: '#474CFF'});
+    //         store.dispatch({type: 'CHANGE RED BAR', index: i});
+    //         store.dispatch({type: 'TIME INDEX SHIFT', operation: '-'});
+    //     }, store.getState().timeoutIndex * 30);
+        
+        // if (tmp[i] < tmp[smallestNumIndex]) {
+        //     smallestNumIndex = i;
+        // }
+    // }
+
+    // if (smallestNumIndex !== firstIndex) {
+    //     const tmpNum = tmp[firstIndex];
+    //     tmp[firstIndex] = tmp[smallestNumIndex];
+    //     tmp[smallestNumIndex] = tmpNum;
+    // }
+
+    // tmpArr = [...tmp];
+    // store.dispatch({type: 'TIME INDEX SHIFT', operation: '+'});
+    // setTimeout(() => {
+    //     store.dispatch({type: 'ARRAY UPDATE', replacement: tmpArr});
+    //     store.dispatch({type: 'TIME INDEX SHIFT', operation: '-'});
+    // }, store.getState().timeoutIndex * 1);
+
+    // if (firstIndex !== tmp.length - 1) {
+    //     tmp = selectionSort(tmp, firstIndex + 1);
+    // }
 };
