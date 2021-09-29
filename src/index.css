@@ -15,8 +15,6 @@
 }
 
 #bar {
-  /*background-color: #7A7EFF;*/
-  width: 2px;
   height: 100%;
   margin: 0px 0.5px 0px 0.5px;
 }
@@ -52,4 +50,17 @@
   width: 1px;
   height: 60%;
   margin: 0px 14px 0px 14px;
+}
+
+#speed-control {
+  background-color: '#FFFFFF';
+}
+
+h1 {
+  font-family: Montserrat, monospace;
+  font-size: 15px;
+  font-weight: 600;
+  color: white;
+  margin: 0px 8px 0px 8px;
+  user-select: none;
 }

@@ -1,5 +1,4 @@
 import { initialState } from './index.js'
-import { replace } from './helpers.js'
 export { reducer };
 
 //Declare our reducer with the initialState object from index.js
@@ -11,29 +10,23 @@ const reducer = (state = initialState, action) => {
     switch(action.type) {
       //Generates new, random array
       case 'RANDOMIZE':
+        //Array becomes empty
         tmp.barProperties = [];
-        for (let i = 0; i < 300; i++) {
+
+        //Repeat tmp.numBars times...
+        for (let i = 0; i < tmp.numBars; i++) {
+          //Random value between 0 and 99
           let num = Math.floor(Math.random() * 100);
+
+          //Push object to tmp.barProperties array with a blueish color
           tmp.barProperties.push({value: num, color: '#474CFF'});
         }
         break;
 
       //Assigns our 'nums' array in the store to its replacement using spread operator
       case 'ARRAY UPDATE':
-        //tmp.nums = [...action.replacement];
-        for (let i = 0; i < action.replacement.length; i++) {
-          tmp.barProperties[i].value = action.replacement[i];
-        }
+        tmp.barProperties = [...action.replacement];
         break;
-
-      //Swaps elements in our 'nums' array
-      // case 'SWAP':
-      //   const tmpArray = [...tmp.nums];
-      //   const swapPlaceholder = tmpArray[action.i];
-      //   tmpArray[action.i] = tmpArray[action.j];
-      //   tmpArray[action.j] = swapPlaceholder;
-      //   tmp.nums = [...tmpArray];
-      //   break;
 
       /* Updates the 'timeIndex' variable, this is necessary for the
        * animation and is explained farther in 'helpers.js'
@@ -46,15 +39,40 @@ const reducer = (state = initialState, action) => {
         }
         break;
 
-      case 'CHANGE BAR COLOR':
-        // const tmpArr = Object.assign({}, tmp);
-        // tmpArr.barColors.splice(action.index, 1, action.color);  //[action.index] = action.color;
-        // tmp = tmpArr;
-        tmp.barColors[action.index].color = action.color;
+      //Changes the color property of a specific object in barProperties
+      case 'COLORIZE':
+        //Create copy of array because we need to mutate
+        let tmpArr = [...tmp.barProperties];
+
+        //If index parameter is -1...
+        if (action.index === -1) {
+          //For each object in array...
+          for (let i = 0; i < tmpArr.length; i++) {
+            //Its color property gets the color parameter
+            tmpArr[i].color = action.color;
+          }
+        } else {
+          //Change color property at specific index the specified color
+          tmpArr[action.index].color = action.color;
+        }
+
+        //Assign tmpArr to the redux array
+        tmp.barProperties = tmpArr;
         break;
 
-      case 'CHANGE RED BAR':
-        tmp.redBarIndex = action.index;
+      //Changes number of bars shown on screen when combined with 'randomize'
+      case 'BAR COUNT UPDATE':
+        tmp.numBars = action.amount;
+        break;
+
+      //Changes sorting speed property; this value is passed into setTimeout
+      case 'SORTING SPEED UPDATE':
+        tmp.sortingSpeed = 1000 / action.amount;
+        break;
+
+      //Sets inProgress to opposite value when a visualization starts/finishes
+      case 'CHANGE PROGRESS':
+        tmp.inProgress = !tmp.inProgress;
         break;
 
       //Default case for initialization of store

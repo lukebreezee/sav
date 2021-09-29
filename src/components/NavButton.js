@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { store } from '..';
-import { actionCreator } from '../action-creators';
 import { mapState } from '../map-to-props';
-import { mergeSort, quickSort, selectionSort } from '../helpers';
+import { mergeSort, quickSort, selectionSort, bubbleSort, colorize, changeProgress } from '../helpers';
 export { NavButton };
 
 //Component for the buttons inside Navbar.js
@@ -32,21 +31,43 @@ class NavButtonClass extends React.Component {
          * within our function to have the animation working properly
          */
 
-        //Switch statement for the button that was clicked
-        switch(this.props.label) {
-            case 'MERGE SORT':
-                mergeSort(this.props.nums, 0, this.props.nums.length - 1);
-                break;
-            case 'QUICK SORT':
-                quickSort(this.props.nums, 0, this.props.nums.length - 1);
-                break;
-            case 'SELECTION SORT':
-                store.dispatch({type: 'CHANGE BAR COLOR', index: 4, color: '#FF0000'});
-                // selectionSort(this.props.nums, 0);
-                break;
-            case 'RANDOMIZE':
-                store.dispatch(actionCreator('RANDOMIZE'));
-                break;
+        const sortingSpeed = store.getState().sortingSpeed;
+
+        //If sorting algorithm is not already happening...
+        if (!store.getState().inProgress) {
+            //Tell redux that we've starting sorting
+            store.dispatch({type: 'CHANGE PROGRESS'});
+            const label = this.props.label;
+
+            //Switch statement for the button that was clicked
+            //'changeProgress' function tells redux that we're done
+            //We turn the array green after we are finished sorting
+            switch(label) {
+                case 'MERGE SORT':
+                    mergeSort(this.props.barProperties, 0, this.props.barProperties.length - 1);
+                    colorize(-1, '#00FF00', sortingSpeed * .5);
+                    changeProgress(sortingSpeed * .5);
+                    break;
+                case 'QUICK SORT':
+                    quickSort(this.props.barProperties, 0, this.props.barProperties.length - 1);
+                    colorize(-1, '#00FF00', sortingSpeed);
+                    break;
+                case 'SELECTION SORT':
+                    selectionSort(this.props.barProperties, 0);
+                    colorize(-1, '#00FF00', sortingSpeed);
+                    break;
+                case 'BUBBLE SORT':    
+                    bubbleSort(this.props.barProperties, this.props.barProperties.length);   
+                    colorize(-1, '#00FF00', sortingSpeed);
+                    break;
+                case 'RANDOMIZE':
+                    store.dispatch({type: 'RANDOMIZE'});
+                    store.dispatch({type: 'CHANGE PROGRESS'});
+                    break;
+            }
+            if (label !== 'MERGE SORT' && label !== 'RANDOMIZE') {
+                changeProgress(sortingSpeed);
+            }
         }
     }
 
