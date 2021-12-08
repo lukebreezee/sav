@@ -2,7 +2,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { store } from '..';
 import { mapState } from '../map-to-props';
-import { mergeSort, quickSort, selectionSort, bubbleSort, colorize, changeProgress } from '../helpers';
+
+import { 
+    
+    mergeSort, 
+    quickSort, 
+    selectionSort, 
+    bubbleSort, 
+    colorize, 
+    changeProgress
+
+} from '../helpers';
+
 export { NavButton };
 
 //Component for the buttons inside Navbar.js

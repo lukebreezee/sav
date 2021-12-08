@@ -6,20 +6,32 @@ import { Navbar } from './Navbar.js';
 export { App };
 
 //Parent Component
-class App extends React.Component {
-    constructor(props) {
-      super(props);
-    }
+// class App extends React.Component {
+//     constructor(props) {
+//       super(props);
+//     }
   
-    render() {
-      return(
-        <Provider store={store}>
-          <div id="app">
-          <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" />
-            <Navbar />
-            <Graph />
-          </div>
-        </Provider>
-      );
-    }
-  }
+//   render() {
+//     return(
+//       <Provider store={store}>
+//         <div id="app">
+//         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" />
+//           <Navbar />
+//           <Graph />
+//         </div>
+//       </Provider>
+//     );
+//   }
+// }
+
+function App() {
+  return(
+    <Provider store={store}>
+      <div id="app">
+      <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" />
+        <Navbar />
+        <Graph />
+      </div>
+    </Provider>
+  );
+}
